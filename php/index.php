@@ -10,29 +10,6 @@
 	<script src="./bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="./Parallax-Scroll/dist/jquery.parallax-scroll.js"></script>
   </head>
-  <style type="text/css">
-	body {
-		width: 100%;
-		height: 100%;
-	}
-	
-	.bg-holder {
-		width: 100%;
-		height: 50%;
-	}
-
-	.bg-holder#pic1 {
-		background-image: url('./pics/pic1.jpg');
-	}
-
-	.bg-holder#pic2 {
-		background-image: url('./pics/pic2.jpg');
-	}
-
-	.bg-holder#pic3 {
-		background-image: url('./pics/pic3.jpg');
-	}
-  </style>
   <body>
   <?php
     $db = new SQLite3('templog.db');
@@ -70,72 +47,6 @@
 		}
 	}
   ?>
-<script>
-  $(function () {
-     $('#container').highcharts({
-            chart: {
-               	zoomType: 'x',
-                height: 500,
-                width: 500
- 			},
-            title: {
-               	text: 'Temperatur'
-            },
-            xAxis: {
-				categories: <?php
-								$time[] = [];
-								foreach ($datetimes as $val) {
-									$time[] = date("H:i:s", strtotime($val));
-								}
-								echo json_encode($time); ?>
-            },
-            yAxis: {
-            max: 20,
-  min: -10,
-  title: {
-                    text: 'Temperatur'
-               	}
-            },
-  series: [{
-  data: [<?php echo join($data, ',') ?>],
-  type: 'area',
-  pointStart: 0,
-  }]
-  });
-  })
-  $(function () {
-     $('#container_avg_day').highcharts({
-            chart: {
-               zoomType: 'x'
-            },
-            title: {
-               text: 'Daglig medeltemperatur'
-            },
-            xAxis: {
-				categories: <?php
-								$dayAvg[] = [];
-								foreach ($days as $i) {
-									$dayAvg[] = date("d/m-y", strtotime($i));
-								}
-								echo json_encode($dayAvg); ?>
-            },
-            yAxis: {
-               title: {
-                  text: 'Temperatur'
-               }
-            },
-  series: [{
-  data: [<?php echo join($avgDay, ',') ?>],
-  type: 'area',
-  pointStart: 0,
-  }]
-  });
-  })
-
-	$(document).ready(function () {
-		$('#summerYet').text("<?php echo $summerYet ?>");
-	});
-</script>
 	<section>
 		<center><h2>Is it summer yet? </h2><h2 id="summerYet"></h2> </br></center>
     </section>
@@ -156,11 +67,5 @@
 	</div>
 	</section>
 	<div id="pic3" class="bg-holder" data-width="1920" data-height="1080"></div>
-	<script>
-		$('.bg-holder').parallaxScroll({
-			friction: 0.5
-		});
-	</script>
 </body>
-
 </html>
